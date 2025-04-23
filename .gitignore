@@ -1,0 +1,9 @@
+_opam
+_build
+
+# Vim swap files
+*.swp
+
+# MacOS
+.DS_Store
+
