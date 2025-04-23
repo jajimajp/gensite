@@ -1,0 +1,38 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup OCaml
+        uses: ocaml/setup-ocaml@v2
+        with:
+          ocaml-compiler: 4.14.2
+          
+      - name: Install dependencies
+        run: |
+          opam install . --deps-only --with-test
+
+      - name: Build and execute
+        run: |
+          eval $(opam env)
+          dune build
+          dune exec ./bin/main.exe
+
+      - name: Deploy via SSH
+        uses: easingthemes/ssh-deploy@v5.1.0
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: "-avz --delete"
+          SOURCE: "dist/"
+          REMOTE_HOST: ${{ secrets.HOSTNAME }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          TARGET: "/var/www/html/"
