@@ -1,6 +1,9 @@
 _opam
 _build
 
+# `gensite` result
+dist
+
 # Vim swap files
 *.swp
 

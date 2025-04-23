@@ -19,6 +19,6 @@
  (name gensite)
  (synopsis "Yet another static site generator")
  (description "gensite is a static site generator")
- (depends ocaml dune)
+ (depends ocaml dune omd)
  (tags (ssg)))
 

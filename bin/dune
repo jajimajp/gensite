@@ -1,4 +1,4 @@
 (executable
  (public_name gensite)
  (name main)
- (libraries gensite))
+ (libraries gensite unix omd))
